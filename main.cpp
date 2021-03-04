@@ -7,16 +7,19 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <iostream>
 #include "statemachine.h"
 
 int main(void){
 
-	RFAOne_Statemachine = tmpStatemachine;
-	tmpStatemachine = new tmpStatemachine;
+	RFAOne_Statemachine  tmpStatemachine;
+	// tmpStatemachine = new RFAOne_Statemachine();
 
 	bool RFAOneStatus = false;
 
 	RFAOneStatus = tmpStatemachine.initStatemachine();
+
+	std::cout << "Launch got initialized ..." << std::endl;
 
 	while(RFAOneStatus){
 
@@ -24,9 +27,9 @@ int main(void){
 
 	}
 
-	tmpStatemachine.quitStatemachine;
+	tmpStatemachine.quitStatemachine();
 
-	free(tmpStatemachine);
+	//free(tmpStatemachine);
 
 	return 0;
 }

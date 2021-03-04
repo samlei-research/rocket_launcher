@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mzdev/workspace/RFA/rocket_launcher/main.cpp
+stdint.h
+-
+stdlib.h
+-
+iostream
+-
+statemachine.h
+/home/mzdev/workspace/RFA/rocket_launcher/statemachine.h
+
+/home/mzdev/workspace/RFA/rocket_launcher/statemachine.cpp
+stdio.h
+-
+stdlib.h
+-
+iostream
+-
+statemachine.h
+/home/mzdev/workspace/RFA/rocket_launcher/statemachine.h
+
+/home/mzdev/workspace/RFA/rocket_launcher/statemachine.h
+stdint.h
+-
+stdlib.h
+-
+

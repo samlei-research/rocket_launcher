@@ -34,10 +34,11 @@ private:
 	launchStates currentState;
 	bool internalStatemachineError;
 public:
-	bool initStatemachine();
-	bool cycleStatemachine();
-	void quitStatemachine();
-}
+	RFAOne_Statemachine(void);
+	bool initStatemachine(void);
+	bool cycleStatemachine(void);
+	void quitStatemachine(void);
+};
 
 #endif /*__cplusplus */
 #endif /* __STATEMACHINE_H */
