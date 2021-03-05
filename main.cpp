@@ -13,7 +13,6 @@
 int main(void){
 
 	RFAOne_Statemachine  tmpStatemachine;
-	// tmpStatemachine = new RFAOne_Statemachine();
 
 	bool RFAOneStatus = false;
 
@@ -28,8 +27,6 @@ int main(void){
 	}
 
 	tmpStatemachine.quitStatemachine();
-
-	//free(tmpStatemachine);
 
 	return 0;
 }
