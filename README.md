@@ -2,7 +2,6 @@
 This software is used to control a dummy rocket launch.
 
 # How to
-1. `cd build`
-2. `cmake ..`
-1. Call`make`
-2. Start Program with `./RFAOne_Launch` 
+1. `cmake .`
+2. Call`make`
+3. Start Program with `./RFAOne_Launch` 
