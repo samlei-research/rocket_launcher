@@ -5,10 +5,6 @@
 // Description:
 //   The statemachine handles the complete rocket launch. It is printing the current state to the terminal.
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
-#include <unistd.h>
 #include "statemachine.h"
 
 RFAOne_Statemachine::RFAOne_Statemachine(void){
@@ -44,7 +40,7 @@ bool RFAOne_Statemachine::cycleStatemachine(void){
 	this->heightMeasurement(this->clamprelease);
 	this->velocityMeasurement();
 	this->checkLocation();
-
+	
 	this->checkEngines();
 	this->checkTelemetry();
 	this->checkSensorsResultValid();
@@ -112,7 +108,7 @@ bool RFAOne_Statemachine::cycleStatemachine(void){
 		case FairingJettison:
 			std::cout << "State: FairingJettison" << std::endl;
 
-			if(nodeEngineState2 && nodeTelemetryState && nodeSensorState && (vertVelocity <= maxPayloadVelocity) && (this->currentLongLatHeight == LongLatHeight)){
+			if(nodeEngineState2 && nodeTelemetryState && nodeSensorState && (vertVelocity <= maxPayloadVelocity) && (currentLongLatHeight == LongLatHeight)){
 				this->currentState = PayloadRelease;
 			}
 
@@ -128,14 +124,13 @@ bool RFAOne_Statemachine::cycleStatemachine(void){
 		case Done:
 			std::cout << "State: Done" << std::endl;
 			this->launchActive = false;
+
 		break;
 		case LaunchFailure:
 			std::cout << "State: LaunchFailure" << std::endl;
 
-			if(nodeEngineState2 && nodeTelemetryState && nodeSensorState && missionControlEnable){
-				this->currentState = EngineIgnition;
-			}else if(internalStatemachineError){
-
+			if(!internalStatemachineError){
+				this->currentState = PreLaunch;
 			}
 
 		break;
@@ -148,34 +143,34 @@ bool RFAOne_Statemachine::cycleStatemachine(void){
 
 
 void RFAOne_Statemachine::checkMissionControl(void){
-	missionControlEnable = true;
+	this->missionControlEnable = true;
 }
 
 void RFAOne_Statemachine::checkEngines(void){
-	usleep(10);
+	msleep(1);
 	this->nodeEngineState1 = true;
 	this->nodeEngineState2 = true;
 }
 void RFAOne_Statemachine::checkTelemetry(void){
-	usleep(10);
+	msleep(1);
 	this->nodeTelemetryState = true;
 }
 void RFAOne_Statemachine::checkSensorsResultValid(void){
-	usleep(20);
+	msleep(2);
 	this->nodeSensorState = true;
 }
 void RFAOne_Statemachine::velocityMeasurement(void){
-	usleep(20);
-	if(this->currentState != FairingJettison || this->currentState != FairingJettison){
+	msleep(1);
+	if(this->currentState != FairingJettison && this->currentState != PreLaunch){
 		this->vertVelocity++;
 	}else if(this->currentState == FairingJettison){
 		this->vertVelocity--;
 	}
 }
 
-void RFAOne_Statemachine::heightMeasurement(bool clamprelease){
-	usleep(20);
-	if(clamprelease){
+void RFAOne_Statemachine::heightMeasurement(bool enable){
+	msleep(2);
+	if(enable){
 		this->flightHeight++;
 	}
 }
@@ -188,7 +183,7 @@ void RFAOne_Statemachine::checkLocation(){
 void RFAOne_Statemachine::countdown(bool enable){
 	
 	if(enable){
-		usleep(1000000);
+		msleep(1000);
 
 		if (internalCounter == 0){
 			countdownDone = true;
@@ -196,6 +191,15 @@ void RFAOne_Statemachine::countdown(bool enable){
 			internalCounter--;
 		}
 	}
+}
+
+void RFAOne_Statemachine::msleep(unsigned int ms){
+	struct timespec ts;
+
+	ts.tv_sec = ms / 1000;
+    ts.tv_nsec = (ms % 1000) * 1000000;
+
+    nanosleep(&ts, NULL);
 }
 
 void RFAOne_Statemachine::quitStatemachine(void){

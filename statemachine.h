@@ -6,16 +6,16 @@
 //   The statemachine handles the complete rocket launch
 #pragma once
 
-#include <stdint.h>
-#include <stdlib.h>
-
+#include <iostream>
+#include <unistd.h>
+#include <time.h>
 
 //dummy values
 #define maxDelay 1000
 #define firstEngineOffHeight 20
 #define secondEngineOffHeight 30
 #define fairingJettisonHeight 40
-#define maxPayloadVelocity 20
+#define maxPayloadVelocity 40
 
 //dummy locationvalue for payload release
 #define LongLatHeight 123
@@ -85,6 +85,8 @@ public:
 
 	//Rocket launch countdown
 	void countdown(bool);
+	//Internal sleep function {milliseconds}
+	void msleep(unsigned int);
 	//Dummy function to quit Statemachine
 	void quitStatemachine(void);
 };

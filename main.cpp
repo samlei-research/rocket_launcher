@@ -5,8 +5,6 @@
 // Description:
 //   Main()-Function to handle all nodes
 
-#include <stdint.h>
-#include <stdlib.h>
 #include <iostream>
 #include "statemachine.h"
 
